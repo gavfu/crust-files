@@ -6,14 +6,16 @@ import useParallax from "../lib/hooks/useParallax";
 import React, {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import {useContextWrapLoginUser} from "../lib/wallet/hooks";
 import {nearConfig} from "../lib/wallet/config";
+import LoginFormModal from "../components/LoginFormModal";
 import styled from "styled-components";
 import TypeIt from "typeit-react";
 import Logo from "../components/Logo";
 import {AppContext} from "../lib/AppContext";
+import { HuoChainUser } from "../lib/wallet/HuoChain";
 
 interface ItemWallet {
   name: 'Crust Wallet' | 'Polkadot (.js Extension)' | 'MetaMask' | 'Near Wallet' | 'Flow (Blocto Wallet)' |
-    'Solana (Phantom Wallet)' | 'Elrond (Maiar Wallet)' | 'WalletConnect'
+    'Solana (Phantom Wallet)' | 'Elrond (Maiar Wallet)' | 'WalletConnect' | 'HuoChain'
   image: string
 }
 
@@ -23,44 +25,15 @@ interface Wallet extends ItemWallet {
 
 const WALLETS: ItemWallet[] = [
   {
-    name: 'Crust Wallet',
-    image: '/images/wallet_crust.png',
-  },
-  {
-    name: 'Polkadot (.js Extension)',
-    image: '/images/wallet_polkadot.png',
-  },
-  {
-    name: 'MetaMask',
-    image: '/images/wallet_metamask.png',
-  },
-  {
-    name: 'Near Wallet',
-    image: '/images/wallet_near.png',
-  },
-  {
-    name: 'Flow (Blocto Wallet)',
-    image: '/images/wallet_flow.png',
-  },
-  {
-    name: 'Solana (Phantom Wallet)',
-    image: '/images/wallet_solana.png',
-  },
-  {
-    name: 'Elrond (Maiar Wallet)',
-    image: '/images/wallet_elrond.png',
-  },
-
-]
-
-const WALLETS2: ItemWallet[] = [
-  {
-    name: 'WalletConnect',
-    image: '/images/wallet_connect.png',
+    name: 'HuoChain',
+    image: '/images/wallet_huochain.png',
   }
 ]
 
+const WALLETS2: ItemWallet[] = []
+
 function Home({className}: { className?: string }) {
+  const [showUpMode, setShowUpMode] = useState(false);
   const {t} = useTranslation()
   const {data} = useParallax(100, WALLETS.length + WALLETS2.length)
   const user = useContextWrapLoginUser()
@@ -71,6 +44,23 @@ function Home({className}: { className?: string }) {
       alert.error(data)
     }
   }, [])
+
+  const _onClose = useCallback(() => {
+    setShowUpMode(false);
+  }, []);
+
+  const _onSuccess = useCallback(async (res: HuoChainUser) => {
+    setShowUpMode(false);
+    user.setLoginUser({
+      account: res.account,
+      wallet: 'huochain'
+    })
+  }, [user]);
+
+  const _onClickHuoChain = useCallback(async () => {
+    setShowUpMode(true)
+  }, [])
+
   const _onClickCrust = useCallback(async () => {
     try {
       setError('')
@@ -269,6 +259,8 @@ function Home({className}: { className?: string }) {
           return {...item, onClick: _onClickSolana}
         case "Elrond (Maiar Wallet)":
           return {...item, onClick: _onClickElrond}
+        case "HuoChain":
+          return {...item, onClick: _onClickHuoChain}
       }
       return {...item, onClick: _onClickCrust}
     })
@@ -380,30 +372,6 @@ function Home({className}: { className?: string }) {
             )
           }
         </div>
-        <div className={"wallets"}>
-          {
-            wallets2.map((w, index) =>
-              <Image
-                key={`wallet_${index}`}
-                id={w.name}
-                className={classNames({spaceLeft: index}, 'animStart', {animFinal: data[index + wallets.length].value})}
-                circular
-                inline
-                size={'tiny'}
-                src={w.image}
-                onClick={w.onClick}
-                onMouseEnter={() => {
-                  setError('')
-                  setHoverWallet(() => wallets2[index])
-                }}
-                onMouseLeave={() => {
-                  setError('')
-                  setHoverWallet(() => null)
-                }}
-              />
-            )
-          }
-        </div>
       </div>
       <span
         className={classNames("signTip font-sans-medium")}
@@ -414,6 +382,10 @@ function Home({className}: { className?: string }) {
           }
         }/>
       <div className={'flexN'}/>
+      {
+            showUpMode && <LoginFormModal onClose={_onClose}
+            onSuccess={_onSuccess} alert={alert}/>
+          }
     </div>
   )
 }

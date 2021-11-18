@@ -1,76 +1,89 @@
-import React, {useCallback} from "react";
-import {Dropdown, Item, Segment} from "semantic-ui-react";
-import {useContextWrapLoginUser, WrapLoginUser} from "../lib/wallet/hooks";
+import React, { useCallback } from "react";
+import { Dropdown, Item, Segment } from "semantic-ui-react";
+import { useContextWrapLoginUser, WrapLoginUser } from "../lib/wallet/hooks";
 import styled from "styled-components";
-import {shortStr} from "../lib/utils";
-import {useToggle} from "../lib/hooks/useToggle";
+import { shortStr } from "../lib/utils";
+import { useToggle } from "../lib/hooks/useToggle";
 import ModalSelectAccount from "./ModalSelectAccount";
-import _ from 'lodash';
+import _ from "lodash";
 
 export interface Props {
-  className?: string,
+  className?: string;
 }
 
 function getWalletIcon(user: WrapLoginUser): string {
   switch (user.wallet) {
     case "crust":
-      return '/images/wallet_crust.png';
+      return "/images/wallet_crust.png";
     case "polkadot-js":
-      return '/images/wallet_polkadot.png';
+      return "/images/wallet_polkadot.png";
     case "metamask":
-      return '/images/wallet_metamask.png';
+      return "/images/wallet_metamask.png";
     case "near":
-      return '/images/wallet_near.png';
+      return "/images/wallet_near.png";
     case "solana":
-      return '/images/wallet_solana.png';
+      return "/images/wallet_solana.png";
     case "elrond":
-      return '/images/wallet_elrond.png';
+      return "/images/wallet_elrond.png";
     case "flow":
-      return '/images/wallet_flow.png';
+      return "/images/wallet_flow.png";
+    case "huochain":
+      return "/images/wallet_huochain.png";
     case "wallet-connect": {
-      const icons = _.get(user.walletConnect.connect, 'peerMeta.icons')
+      const icons = _.get(user.walletConnect.connect, "peerMeta.icons");
       if (_.size(icons)) {
-        return icons[0]
+        return icons[0];
       }
-      return '/images/wallet_connect.png';
+      return "/images/wallet_connect.png";
     }
     default:
-      return ''
+      return "";
   }
 }
 
 function User(props: Props) {
   const user = useContextWrapLoginUser();
-  const _onClickLogout = useCallback(user.logout, [user])
-  const [open, toggleOpen] = useToggle()
+  const _onClickLogout = useCallback(user.logout, [user]);
+  const [open, toggleOpen] = useToggle();
 
-  return <Segment basic textAlign={"right"} className={props.className}>
-    {
-      open && <ModalSelectAccount
-        size={'tiny'}
-        open={true}
-        user={user}
-        toggleOpen={toggleOpen}
-      />
-    }
-    <Item.Group>
-      <Item style={{justifyContent: 'flex-end'}}>
-        <Item.Image src={getWalletIcon(user)} size={'tiny'}/>
-        <Item.Content verticalAlign={"middle"} style={{flex: 'unset', paddingLeft: '0.7rem'}}>
-          <Dropdown
-            pointing={"top right"}
-            icon={<span className="cru-fo cru-fo-chevron-down"/>}
-            basic
-            text={shortStr(user.account)}>
-            <Dropdown.Menu>
-              {user.accounts && <Dropdown.Item text={'Switch Account'} onClick={() => toggleOpen()}/>}
-              <Dropdown.Item text={'Logout'} onClick={_onClickLogout}/>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Item.Content>
-      </Item>
-    </Item.Group>
-  </Segment>
+  return (
+    <Segment basic textAlign={"right"} className={props.className}>
+      {open && (
+        <ModalSelectAccount
+          size={"tiny"}
+          open={true}
+          user={user}
+          toggleOpen={toggleOpen}
+        />
+      )}
+      <Item.Group>
+        <Item style={{ justifyContent: "flex-end" }}>
+          <Item.Image src={getWalletIcon(user)} size={"tiny"} />
+          <Item.Content
+            verticalAlign={"middle"}
+            style={{ flex: "unset", paddingLeft: "0.7rem" }}
+          >
+            <Dropdown
+              pointing={"top right"}
+              icon={<span className="cru-fo cru-fo-chevron-down" />}
+              basic
+              text={shortStr(user.account)}
+            >
+              <Dropdown.Menu>
+                {user.accounts && (
+                  <Dropdown.Item
+                    text={"Switch Account"}
+                    onClick={() => toggleOpen()}
+                  />
+                )}
+                <Dropdown.Item text={"Logout"} onClick={_onClickLogout} />
+              </Dropdown.Menu>
+            </Dropdown>
+          </Item.Content>
+        </Item>
+      </Item.Group>
+    </Segment>
+  );
 }
 
 export default React.memo(styled(User)`
@@ -104,10 +117,10 @@ export default React.memo(styled(User)`
     }
 
     .menu {
-      background: #FFFFFF;
+      background: #ffffff;
       box-shadow: 0 0.57rem 1.43rem 0 rgba(0, 0, 0, 0.1);
       border-radius: 0.86rem;
-      border: 0.07rem solid #EEEEEE;
+      border: 0.07rem solid #eeeeee;
       padding: 0.57rem;
 
       .item {
@@ -115,9 +128,9 @@ export default React.memo(styled(User)`
         border-radius: 0.57rem;
 
         &:active {
-          background-color: #EEEEEE;
+          background-color: #eeeeee;
         }
       }
     }
   }
-`)
+`);
