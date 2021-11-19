@@ -3,22 +3,24 @@ import styled from "styled-components";
 import BgAnim from "../../components/effect/BgAnim";
 
 export interface Props {
-  className?: string
+  className?: string;
 }
 
 function Index(props: Props) {
-  const {className} = props
-  return <div className={className}>
-    <BgAnim/>
-    <div className={'flex1'}/>
-    <img className={'tipIcon'} src={'/images/crust_box2x.png'}/>
-    <div className={'tips'}>
-      Crust Files is currently not available on mobile devices. Please visit on PC/Desktop devices. Thank you!
+  const { className } = props;
+  return (
+    <div className={className}>
+      <BgAnim />
+      <div className={"flex1"} />
+      <img className={"tipIcon"} src={"/images/crust_box2x.png"} />
+      <div className={"tips"}>
+        Baitech Files is currently not available on mobile devices. Please visit
+        on PC/Desktop devices. Thank you!
+      </div>
+      <div className={"flex1"} />
     </div>
-    <div className={'flex1'}/>
-  </div>
+  );
 }
-
 
 export default React.memo<Props>(styled(Index)`
   color: white;
@@ -45,4 +47,4 @@ export default React.memo<Props>(styled(Index)`
     font-size: 1.7rem;
     line-height: 2.36rem;
   }
-`)
+`);

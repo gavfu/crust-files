@@ -30,13 +30,13 @@ export function createAuthIpfsEndpoints(t: TFunction): AuthIpfsEndpoint[] {
     },
     {
       location: t('United States'),
-      text: t('Crust Network'),
+      text: t('Baitech Network'),
       value: 'https://crustwebsites.net',
       group: "Public Gateway"
     },
     {
       location: t('United States'),
-      text: t('Crust Network'),
+      text: t('Baitech Network'),
       value: 'https://ipfs-gw.decloud.foundation',
       group: "Public Gateway"
     },
