@@ -250,6 +250,8 @@ export function useLoginUser(key: KEYS = "files:login"): WrapLoginUser {
       }
       if (f.wallet === "huochain") {
         huochain.init();
+        setAccount(f);
+        setIsLoad(false);
         return;
       }
       if (f.wallet === "crust") {
