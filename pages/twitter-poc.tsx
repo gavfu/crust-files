@@ -20,11 +20,7 @@ function Index(props: Props) {
       <Segment basic className="mcontent">
         <Segment basic className={"mcard"}>
           <div className="title font-sans-semibold">
-            {t('Directly tweet text with hashtags')}
-          </div>
-          <div className="text font-sans-regular">
-            1. Self-customized UI <br/>
-            2. No need to load twitter script
+            {t('Tweet with Web Intent')}
           </div>
           <div className="text font-sans-regular">
             <span className="bold-text font-sans-semibold">Ref: </span>
@@ -37,11 +33,7 @@ function Index(props: Props) {
 
         <Segment basic className={"mcard"}>
           <div className="title font-sans-semibold">
-            {t('Tweet with standard Tweet Button')}
-          </div>
-          <div className="text font-sans-regular">
-            1. With standard twitter widgets <br/>
-            2. Need load twitter script
+            {t('Tweet with Tweet Button')}
           </div>
           <div className="text font-sans-regular">
             <span className="bold-text font-sans-semibold">Ref: </span>
@@ -58,26 +50,7 @@ function Index(props: Props) {
 
       </Segment>
     </Segment>
-    <Script id="show-banner" strategy="afterInteractive">
-      {`
-        window.twttr = (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0],
-            t = window.twttr || {};
-          if (d.getElementById(id)) return t;
-          js = d.createElement(s);
-          js.id = id;
-          js.src = "https://platform.twitter.com/widgets.js";
-          fjs.parentNode.insertBefore(js, fjs);
-
-          t._e = [];
-          t.ready = function(f) {
-            t._e.push(f);
-          };
-
-          return t;
-        }(document, "script", "twitter-wjs"));
-      `}
-    </Script>
+    <Script src="https://platform.twitter.com/widgets.js" strategy="afterInteractive" />
   </SideLayout>
 }
 
