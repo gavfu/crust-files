@@ -14,6 +14,10 @@ function Index(props: Props) {
   const { className } = props
   const { t } = useTranslation()
 
+  // Note: Current shareFileUrl need to be tweaked to correctly disply twitter card
+  // const sharedFileUrl = 'https://files.decoo.cloud/files/receive/?cid=QmV91s7ByB7UKhyBBGbvt3GXaaMs7mr84UZZsPX4QrMTKG&options=%7B%22name%22:%22Sprint%20C1%E9%9C%80%E6%B1%82%E6%80%BB%E7%BB%93%2012-10.docx%22,%22encrypted%22:false,%22gateway%22:%22https://gw.crustapps.net%22,%22fromAccount%22:%220x7c04b1223e620d5f8bed5c664c23f9417d5c21c5%22,%22fromWallet%22:%22metamask-Polygon%22,%22from%22:%22%22,%22isDir%22:false%7D';
+  const sharedFileUrl = 'https://files.decoo.cloud/files/receive?cid=QmV91s7ByB7UKhyBBGbvt3GXaaMs7mr84UZZsPX4QrMTKG&options=%7B%22name%22:%22Sprint%20C1%E9%9C%80%E6%B1%82%E6%80%BB%E7%BB%93%2012-10.docx%22,%22encrypted%22:false,%22gateway%22:%22https://gw.crustapps.net%22,%22fromAccount%22:%220x7c04b1223e620d5f8bed5c664c23f9417d5c21c5%22,%22fromWallet%22:%22metamask-Polygon%22,%22from%22:%22%22,%22isDir%22:false%7D';
+
   return <SideLayout path={'/twitter-poc'}>
     <Segment basic className={className}>
       <User />
@@ -24,10 +28,10 @@ function Index(props: Props) {
           </div>
           <div className="text font-sans-regular">
             <span className="bold-text font-sans-semibold">Ref: </span>
-            <a target={'_blank'} href="https://developer.twitter.com/en/docs/twitter-for-websites/web-intents/overview">https://developer.twitter.com/en/docs/twitter-for-websites/web-intents/overview</a>
+            <a target={'_blank'} rel="noreferrer" href="https://developer.twitter.com/en/docs/twitter-for-websites/web-intents/overview">https://developer.twitter.com/en/docs/twitter-for-websites/web-intents/overview</a>
           </div>
           <div className={'btns'}>
-            <a target={"_blank"} href="https://twitter.com/intent/tweet?text=Welcome%20to%20Crust%20Files&hashtags=metaverse,crust&url=https://files.crustapps.net">Quick Tweet</a>
+            <a target={"_blank"} rel="noreferrer" href={`https://twitter.com/intent/tweet?text=Welcome%20to%20Crust%20Files&hashtags=metaverse,crust&url=${sharedFileUrl}`}>Quick Tweet</a>
           </div>
         </Segment>
 
@@ -37,7 +41,7 @@ function Index(props: Props) {
           </div>
           <div className="text font-sans-regular">
             <span className="bold-text font-sans-semibold">Ref: </span>
-            <a target={'_blank'} href="https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview">https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview</a>
+            <a target={'_blank'} rel="noreferrer" href="https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview">https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/overview</a>
           </div>
           <div className={'btns'}>
             <a className={"twitter-share-button"}
