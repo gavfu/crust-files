@@ -1,7 +1,7 @@
 name: Prod Release to IPFS
 on:
   push:
-    branches: [ main ]
+    branches: [ main, gavfu/testCFToken ]
   workflow_dispatch:
 
 jobs:
