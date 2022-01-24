@@ -25,7 +25,7 @@ const nextConfig = withMDX({
     }
     return config
   },
-  trailingSlash: true,
+  trailingSlash: false,
   experimental: {
     // ssr and displayName are configured by default
     styledComponents: true,
